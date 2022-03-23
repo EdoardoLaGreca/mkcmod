@@ -1,6 +1,9 @@
 # mkcmod
 Make C module
 
+[![Build](https://github.com/EdoardoLaGreca/mkcmod/actions/workflows/build.yml/badge.svg)](https://github.com/EdoardoLaGreca/mkcmod/actions/workflows/build.yml)
+[![Test](https://github.com/EdoardoLaGreca/mkcmod/actions/workflows/test.yml/badge.svg)](https://github.com/EdoardoLaGreca/mkcmod/actions/workflows/test.yml)
+
 This program is meant to ease the creation of C modules (pairs of header file and implementation/source file).
 
 ## Usage
