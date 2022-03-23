@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: install valgrind
+        run: sudo apt install valgrind
+      
+      - name: build
+        run: make build && cd bin
+    
+      - name: test 1 - normal use
+        run: valgrind ./mkcmod test && [ -e test.c ] && [ -e test.h ] && rm test.c test.h
+      
+      - name: test 2 - no name
+        run: valgrind ./mkcmod || [ "$?" -eq "1" ]
+      
+      - name: test 3 - no include guard
+        run: valgrind ./mkcmod -g test && [ -e test.c ] && [ -e test.h ] && rm test.c test.h
+      
+      - name: test 4 - use standard include guard
+        run: valgrind ./mkcmod -d test && [ -e test.c ] && [ -e test.h ] && rm test.c test.h
+      
+      - name: test 5 - use -g and -d options together (1/2)
+        run: valgrind ./mkcmod -g -d test && [ -e test.c ] && [ -e test.h ] && rm test.c test.h
+      
+      - name: test 6 - use -g and -d options together (2/2)
+        run: valgrind ./mkcmod -d -g test && [ -e test.c ] && [ -e test.h ] && rm test.c test.h
