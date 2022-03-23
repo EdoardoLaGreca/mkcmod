@@ -18,7 +18,7 @@ int parse_args(int argc, char **argv) {
 			int j;
 
 			/* for each character */
-			for (j = 0; j < (int) strlen(argv[i]); j++) {
+			for (j = 1; j < (int) strlen(argv[i]); j++) {
 				char opt = argv[i][j];
 
 				/* option */
