@@ -1,0 +1,2 @@
+# mkcmod
+Make C module
