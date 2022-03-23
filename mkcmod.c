@@ -35,14 +35,14 @@ int parse_args(int argc, char **argv) {
 					break;
 				}
 			}
-			
+
 		} else {
 			name = argv[i];
 
 			/* name is the last argument */
 			break;
 		}
-		
+
 	}
 
 	return 1;
@@ -72,9 +72,16 @@ int main(int argc, char **argv) {
 		fprintf(stderr, "ERROR: no name supplied.\n");
 		exit(EXIT_FAILURE);
 	}
-	
-	header_name = strcat(name, ".h");
-	source_name = strcat(name, ".c");
+
+	/* create header file name */
+	header_name = calloc(strlen(name) + 3, sizeof(char));
+	strcpy(header_name, name);
+	strcat(header_name, ".h");
+
+	/* create source file name */
+	source_name = calloc(strlen(name) + 3, sizeof(char));
+	strcpy(source_name, name);
+	strcat(source_name, ".c");
 
 	/* check if files already exist */
 	if (file_exists(header_name) || file_exists(source_name)) {
@@ -90,18 +97,14 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
+	/* put guards if needed */
 	if (put_guard) {
-		char *include_guard;
-		
 		if (use_standard_guard) {
-			char *guard_symbol = strcat("__", strcat(name, "_H__"));
-			include_guard = strcat("#ifndef ", strcat(guard_symbol,
-				strcat("\n#define ", strcat(guard_symbol, "\n"))));
+			fprintf(hp, "#ifndef __%s_H__\n", name);
+			fprintf(hp, "#define __%s_H__\n", name);
 		} else {
-			include_guard = "#pragma once\n";
+			fprintf(hp, "#pragma once\n");
 		}
-		
-		fprintf(hp, include_guard);
 	}
 
 	return 0;
