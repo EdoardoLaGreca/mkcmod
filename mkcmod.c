@@ -75,13 +75,11 @@ int main(int argc, char **argv) {
 
 	/* create header file name */
 	header_name = calloc(strlen(name) + 3, sizeof(char));
-	strcpy(header_name, name);
-	strcat(header_name, ".h");
+	sprintf(header_name, "%s.h", name);
 
 	/* create source file name */
 	source_name = calloc(strlen(name) + 3, sizeof(char));
-	strcpy(source_name, name);
-	strcat(source_name, ".c");
+	sprintf(source_name, "%s.c", name);
 
 	/* check if files already exist */
 	if (file_exists(header_name) || file_exists(source_name)) {
