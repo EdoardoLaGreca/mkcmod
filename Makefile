@@ -1,5 +1,5 @@
 CC = cc
-ARGS = -std=c90 -Wall -Wpedantic
+CFLAGS = -std=c90 -Wall -Wpedantic
 
 # installation directory
 INST_DIR = /bin
@@ -8,7 +8,7 @@ all: build install
 
 build:
 	mkdir -p bin
-	$(CC) $(ARGS) -o bin/mkcmod mkcmod.c
+	$(CC) $(ARGS) -O3 -o bin/mkcmod mkcmod.c
 
 build-dbg:
 	mkdir -p bin
@@ -18,8 +18,7 @@ clean:
 	rm -r bin
 
 install:
-	mv mkcmod $(INST_DIR)
+	su -c "mv bin/mkcmod $(INST_DIR)"
 
 uninstall:
-	rm $(INST_DIR)/mkcmod
-	
+	su -c "rm $(INST_DIR)/mkcmod"
