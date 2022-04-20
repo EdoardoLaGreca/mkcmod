@@ -95,6 +95,9 @@ int main(int argc, char **argv) {
 		exit(EXIT_FAILURE);
 	}
 
+	/* write include in source file */
+	fprintf(sp, "#include \"%s\"\n", header_name);
+
 	/* put guards if needed */
 	if (put_guard) {
 		if (use_standard_guard) {
