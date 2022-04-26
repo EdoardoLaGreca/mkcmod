@@ -22,19 +22,19 @@ jobs:
         run: make build
     
       - name: test 1 - normal use
-        run: valgrind ./bin/mkcmod test && [ `cat test.c` ] && [ -e test.h ] && rm test.c test.h
+        run: valgrind ./bin/mkcmod test && [ -s test.c ] && [ -e test.h ] && rm test.c test.h
       
       - name: test 2 - no name
         run: valgrind ./bin/mkcmod || [ "$?" -eq "1" ]
       
       - name: test 3 - no include guard
-        run: valgrind ./bin/mkcmod -g test && [ `cat test.c` ] && [ -z `cat test.h` ] && rm test.c test.h
+        run: valgrind ./bin/mkcmod -g test && [ -s test.c ] && [ -z `cat test.h` ] && rm test.c test.h
       
       - name: test 4 - use standard include guard
-        run: valgrind ./bin/mkcmod -d test && [ `cat test.c` ] && [ -e test.h ] && rm test.c test.h
+        run: valgrind ./bin/mkcmod -d test && [ -s test.c ] && [ -e test.h ] && rm test.c test.h
       
       - name: test 5 - use -g and -d options together (1/2)
-        run: valgrind ./bin/mkcmod -g -d test && [ `cat test.c` ] && [ -z `cat test.h` ] && rm test.c test.h
+        run: valgrind ./bin/mkcmod -g -d test && [ -s test.c ] && [ -z `cat test.h` ] && rm test.c test.h
       
       - name: test 6 - use -g and -d options together (2/2)
-        run: valgrind ./bin/mkcmod -d -g test && [ `cat test.c` ] && [ -z `cat test.h` ] && rm test.c test.h
+        run: valgrind ./bin/mkcmod -d -g test && [ -s test.c ] && [ -z `cat test.h` ] && rm test.c test.h
